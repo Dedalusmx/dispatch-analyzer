@@ -138,7 +138,7 @@ function calculateNegotiationStrategy({ totalMiles, loadedMiles, offeredRate, ta
 function calculateDailyMileage(lm, pd, dd) {
   if (!lm || lm <= 0 || !pd || !dd) return null;
   const p = new Date(pd.getFullYear(), pd.getMonth(), pd.getDate()), d = new Date(dd.getFullYear(), dd.getMonth(), dd.getDate());
-  const days = Math.max(1, Math.round((d - p) / 86400000) + 1);
+  const days = Math.max(1, Math.round((d.getTime() - p.getTime()) / 86400000) + 1);
   return { operationalDays: days, milesPerDay: lm / days, loadedMiles: lm };
 }
 
@@ -211,27 +211,27 @@ const P = {
 // UI PRIMITIVES
 // ═══════════════════════════════════════════════════════════════════
 
-const In = ({ value, onChange, type = "text", placeholder, big, style: sx, ...rest }) => (
+const In = ({ value, onChange, type = "text", placeholder, big, style: sx, ...rest }: any) => (
   <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
     style={{ width: "100%", padding: big ? "10px 12px" : "7px 10px", background: P.inputBg, border: `1px solid ${P.inputBd}`, borderRadius: 5, color: P.tx, fontSize: big ? 18 : 14, fontWeight: big ? 700 : 400, outline: "none", boxSizing: "border-box", ...sx }}
     onFocus={e => { e.target.style.borderColor = P.accent; }} onBlur={e => { e.target.style.borderColor = P.inputBd; }} {...rest} />
 );
 
-const Sl = ({ value, onChange, options, style: sx }) => (
+const Sl = ({ value, onChange, options, style: sx }: any) => (
   <select value={value} onChange={e => onChange(e.target.value)}
     style={{ width: "100%", padding: "7px 10px", background: P.inputBg, border: `1px solid ${P.inputBd}`, borderRadius: 5, color: P.tx, fontSize: 14, outline: "none", boxSizing: "border-box", ...sx }}>
     {options.map(o => typeof o === "string" ? <option key={o} value={o}>{o}</option> : <option key={o.value} value={o.value}>{o.label}</option>)}
   </select>
 );
 
-const Lb = ({ children, hint }) => (
+const Lb = ({ children, hint }: any) => (
   <div style={{ flex: "1 1 140px", minWidth: 100 }}>
     <div style={{ fontSize: 11, color: P.t2, marginBottom: 3, fontWeight: 500 }}>{children}</div>
     {hint && <div style={{ fontSize: 10, color: P.t3, marginTop: 2 }}>{hint}</div>}
   </div>
 );
 
-const Fl = ({ label, children, hint }) => (
+const Fl = ({ label, children, hint }: any) => (
   <div style={{ flex: "1 1 140px", minWidth: 100 }}>
     <div style={{ fontSize: 11, color: P.t2, marginBottom: 3, fontWeight: 500 }}>{label}</div>
     {children}
@@ -239,16 +239,16 @@ const Fl = ({ label, children, hint }) => (
   </div>
 );
 
-const Rw = ({ children, gap = 10 }) => <div style={{ display: "flex", flexWrap: "wrap", gap }}>{children}</div>;
+const Rw = ({ children, gap = 10 }: any) => <div style={{ display: "flex", flexWrap: "wrap", gap }}>{children}</div>;
 
-const Box = ({ title, children, compact, style: sx }) => (
+const Box = ({ title, children, compact, style: sx }: any) => (
   <div style={{ background: P.panel, border: `1px solid ${P.border}`, borderRadius: 6, marginBottom: compact ? 8 : 10, ...sx }}>
     {title && <div style={{ padding: "7px 14px", borderBottom: `1px solid ${P.border}`, fontSize: 11, fontWeight: 600, color: P.t2, letterSpacing: "0.04em" }}>{title}</div>}
     <div style={{ padding: compact ? "10px 14px" : "14px" }}>{children}</div>
   </div>
 );
 
-const Num = ({ label, value, sub, color, size = 22 }) => (
+const Num = ({ label, value, sub, color, size = 22 }: any) => (
   <div style={{ textAlign: "center", padding: "6px 2px" }}>
     <div style={{ fontSize: 10, color: P.t2, marginBottom: 1 }}>{label}</div>
     <div style={{ fontSize: size, fontWeight: 700, color: color || P.tx, fontVariantNumeric: "tabular-nums", lineHeight: 1.2 }}>{value}</div>
